@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    `maven-publish`
     kotlin("jvm") version "1.6.20"
 }
 
@@ -23,4 +24,23 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+val sourcesJar by tasks.registering(Jar::class) {
+    classifier = "sources"
+    from(sourceSets.main.get().allSource)
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("$buildDir/repo")
+        }
+    }
+    publications {
+        register("mavenJava", MavenPublication::class.java) {
+            from(components["java"])
+            artifact(sourcesJar.get())
+        }
+    }
 }
