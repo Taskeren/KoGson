@@ -77,9 +77,9 @@ object KoGson {
 	fun updateTheMagicGson(block: GsonBuilder.() -> Gson) { theMagicGson = block(theMagicGson.newBuilder()) }
 
 	// private final List<JsonElement> elements;
-	private val refElements = JsonArray::class.java.getDeclaredField("elements").apply(Field::trySetAccessible)
+	private val refElements = JsonArray::class.java.getDeclaredField("elements").apply { isAccessible = true }
 	// private final LinkedTreeMap<String, JsonElement> members;
-	private val refMembers = JsonObject::class.java.getDeclaredField("members").apply(Field::trySetAccessible)
+	private val refMembers = JsonObject::class.java.getDeclaredField("members").apply { isAccessible = true }
 
 	// The "elements" field in JsonArray to store the JsonElements
 	val JsonArray.elementsUnsafe @Suppress("UNCHECKED_CAST") get() = refElements.get(this) as ArrayList<JsonElement>
