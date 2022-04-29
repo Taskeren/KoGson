@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "cn.taskeren.code"
-version = "1.0-SNAPSHOT"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,8 @@ tasks.withType<KotlinCompile> {
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
+    // classifier = "sources"
+    archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
 
